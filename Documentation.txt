@@ -1,0 +1,101 @@
+Pre-Requirements for Application:
+- download & install Python 3.5+ from official site
+- check pip version: pip --version
+- download & install MySQL server 8 from official site
+- set the username & password as in the settings.py (check the databases section for username, password, DB name)
+	DB name: trivago
+	user: root
+	password: Prajw@l123
+	
+- Run the Dockerfile to meet the requirements
+
+Assumptions made:
+- RDBMS at the backend(MySQL server)
+- Django, a python web framework is used for this application. It's a MVT architecture widely used to create RESTful applications.
+- manually added some data in database for testing using REST POST method, since csv taking too much time to import the data, maybe due to the file size.
+- Please change the line 65 & 74 in views.py of myapp for file path (selections.csv & clicks.csv) accoring to your directory structure
+	Ex: "C:\\backup\Lynda\projects\pro\selections.csv" for selection file upload
+		"C:\\backup\Lynda\projects\pro\clicks.csv" for clicks file upload
+
+Database setup in app:
+change the directory to under trivago & this is the file system structure in Django.
+
+├── trivago
+├   myapp
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── admin.py
+│   ├── models.py
+│   ├── serialaizers.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+│   
+│   ├── trivago
+│   │   ├── __init__.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   └── manage.py
+└── requirements.txt
+
+$ python manage.py makemigrations myapp
+$ python manage.py migrate
+
+this will create tables & performs all migrations in the database trivago through django models
+
+Schema:
+Solution table:
++---------+------------+---------------------+------------+
+| id      | timestamp  | user_id             | amenity_id |
++---------+------------+---------------------+------------+
+
+Clicks table:
++----+-----------+---------+----------+--------------+
+| id | timestamp | user_id | hotel_id | hotel_region |
++----+-----------+---------+----------+--------------+
+
+Testing the application on local server:
+$ python manage.py runserver
+
+The application will be running on localhost with default port no 8000
+
+Issue with two given csv files: selections.csv & clicks.csv
+since the file is too high, time taken to complete the transaction is ~ 1hr
+This is taking too much time to load into the database
+
+API root:
+http://localhost:8000/api/ 
+
+Clicks table:
+http://localhost:8000/api/clicks/
+
+Solution table:
+http://localhost:8000/api/solution/
+
+Ask:
+1. For a user list top N amenities,
+http://127.0.0.1:8000/api/amenity/username=757007622307714574
+
+2. For a user list top N hotels clicked on the most for a particular user.
+http://127.0.0.1:8000/api/clicks/username=1
+
+see images folder for specified output
+
+
+
+Developer contact:
+For more info reach out,
+Prajwal Shetty
+prajwal041@gmail.com
+github: https://github.com/prajwal041
+
+
+
+
+
+
+
